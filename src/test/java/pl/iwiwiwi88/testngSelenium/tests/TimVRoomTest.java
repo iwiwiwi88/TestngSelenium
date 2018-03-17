@@ -8,11 +8,10 @@ import static org.testng.Assert.*;
 
 public class TimVRoomTest extends BaseTest {
 
-    TimVRoomPage timPage;
+    private TimVRoomPage timPage;
     private String pageTitle = "Selenium Playground";
     private String kilgore = "Kilgore Trout";
     private String occupationOption = "Science Fiction Author";
-    private int i = 1;
 
     @Test
     public void step01() {
