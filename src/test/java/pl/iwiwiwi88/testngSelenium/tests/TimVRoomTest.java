@@ -3,12 +3,20 @@ package pl.iwiwiwi88.testngSelenium.tests;
 import org.testng.annotations.Test;
 import pl.iwiwiwi88.testngSelenium.pageObjects.TimVRoomPage;
 
+
+import static org.testng.Assert.*;
+
 public class TimVRoomTest extends BaseTest {
+
+    private String pageTitle = "Selenium Playground";
 
     @Test
     public void goThroughTheSteps() {
         TimVRoomPage timPage = new TimVRoomPage(driver);
         // 1. Grab page title and place title text in answer slot #1
+        String title = timPage.getTitle();
+        assertEquals(pageTitle, title, "Title is incorrect");
+        timPage.inputTextIntoId(title, "answer1");
         // 2. Fill out name section of form to be Kilgore Trout
         // 3. Set occupation on form to Sci-Fi Author
         // 4. Count number of blue_boxes on page after form and enter into answer box #4
@@ -25,6 +33,11 @@ public class TimVRoomTest extends BaseTest {
         // 15. Waiting game: click the link with link text of 'click then wait' a random wait will occur (up to 10 seconds) and then a new link will get added with link text of 'click after wait' - click this new link within 500 ms of it appearing to pass this test
         // 16. Click OK on the confirm after completing task 15
         // 17. Click the submit button on the form
+
+        try {
+            Thread.sleep(5000);
+        } catch (Exception e) {
+        }
 
     }
 
