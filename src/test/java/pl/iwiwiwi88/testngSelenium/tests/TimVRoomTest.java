@@ -44,18 +44,21 @@ public class TimVRoomTest extends BaseTest {
 
     @Test(dependsOnMethods = "step04")
     public void step05() {
-
         // 5. Click link that says 'click me'
+        timPage.click("click me");
     }
 
     @Test(dependsOnMethods = "step05")
     public void step06() {
-        fail();
         // 6. Find red box on its page find class applied to it, and enter into answer box #6
+        String redBoxClass = timPage.getClassOfRedBox();
+        assertEquals("red", redBoxClass, "Class isn't correct");
+        timPage.inputTextIntoId(redBoxClass, "answer6");
     }
 
     @Test(dependsOnMethods = "step06")
     public void step07() {
+        fail();
         // 7. Run JavaScript function as: ran_this_js_function() from your Selenium script
     }
 

@@ -39,6 +39,10 @@ public class BasePage {
         driver.findElement(locator).sendKeys(text);
     }
 
+    public void click(By locator) {
+        find(locator).click();
+    }
+
     public void selectOptionFromNonMultiselect(String option, By locator) {
         (new Select(find(locator))).selectByVisibleText(option);
     }

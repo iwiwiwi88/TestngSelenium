@@ -15,6 +15,8 @@ public class TimVRoomPage extends BasePage {
     By topHeading = By.id("tophead");
     By occupation = By.id("occupation");
     By blueBox = By.cssSelector(".bluebox");
+    By redBox = By.id("redbox");
+    By clickMeLink = By.xpath("//a[text()='click me']");
 
     public TimVRoomPage(WebDriver driver) {
         super(driver);
@@ -44,4 +46,15 @@ public class TimVRoomPage extends BasePage {
     public int countBlueBoxes() {
         return findList(blueBox).size();
     }
+
+    public String getClassOfRedBox() {
+        return find(redBox).getAttribute("class");
+    }
+
+    public void click(String linkText) {
+        if (linkText.equals("click me")) {
+            click(clickMeLink);
+        }
+    }
+
 }
