@@ -100,7 +100,7 @@ public class TimVRoomTest extends BaseTest {
     @Test(dependsOnMethods = "step12")
     public void step13() {
         // 13. Type into answer slot 13 yes or no depending on whether item by id of ishere is on the page
-        Boolean isDisplayed = timPage.isDisplayedById("ishere");
+        Boolean isDisplayed = timPage.isEnabledById("ishere");
         timPage.inputTextIntoId(isDisplayed ? "yes" : "no", "answer13");
     }
 

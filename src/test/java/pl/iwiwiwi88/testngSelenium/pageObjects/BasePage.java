@@ -81,6 +81,18 @@ public class BasePage {
         return isDisplayed(By.id(id));
     }
 
+    public Boolean isEnabled(By locator) {
+        try {
+            return find(locator).isEnabled();
+        } catch (NoSuchElementException ex) {
+            return false;
+        }
+    }
+
+    public Boolean isEnabledById(String id) {
+        return isEnabled(By.id(id));
+    }
+
     public void runJS(String functionName) {
         ((JavascriptExecutor) driver).executeScript(functionName + "();");
     }
