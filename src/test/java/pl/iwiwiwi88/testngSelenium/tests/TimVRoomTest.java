@@ -1,5 +1,6 @@
 package pl.iwiwiwi88.testngSelenium.tests;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.Test;
 import pl.iwiwiwi88.testngSelenium.pageObjects.TimVRoomPage;
 
@@ -52,24 +53,28 @@ public class TimVRoomTest extends BaseTest {
     public void step06() {
         // 6. Find red box on its page find class applied to it, and enter into answer box #6
         String redBoxClass = timPage.getClassOfRedBox();
-        assertEquals("red", redBoxClass, "Class isn't correct");
+        System.out.println("redBox class: "+redBoxClass);
         timPage.inputTextIntoId(redBoxClass, "answer6");
     }
 
     @Test(dependsOnMethods = "step06")
     public void step07() {
-        fail();
         // 7. Run JavaScript function as: ran_this_js_function() from your Selenium script
+        timPage.runJS("ran_this_js_function");
     }
 
     @Test(dependsOnMethods = "step07")
     public void step08() {
         // 8. Run JavaScript function as: got_return_from_js_function() from your Selenium script,
         // take returned value and place it in answer slot #8
+        String value = timPage.runJSReturn("got_return_from_js_function");
+        timPage.inputTextIntoId(value, "answer8");
     }
 
     @Test(dependsOnMethods = "step08")
     public void step09() {
+
+        fail();
         // 9. Mark radio button on form for written book? to Yes
     }
 
