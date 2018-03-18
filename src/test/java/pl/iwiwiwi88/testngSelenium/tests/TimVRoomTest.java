@@ -53,7 +53,7 @@ public class TimVRoomTest extends BaseTest {
     public void step06() {
         // 6. Find red box on its page find class applied to it, and enter into answer box #6
         String redBoxClass = timPage.getClassOfRedBox();
-        System.out.println("redBox class: "+redBoxClass);
+        System.out.println("redBox class: " + redBoxClass);
         timPage.inputTextIntoId(redBoxClass, "answer6");
     }
 
@@ -73,34 +73,42 @@ public class TimVRoomTest extends BaseTest {
 
     @Test(dependsOnMethods = "step08")
     public void step09() {
-
-        fail();
         // 9. Mark radio button on form for written book? to Yes
+        timPage.writtenBook(true);
     }
 
     @Test(dependsOnMethods = "step09")
     public void step10() {
         // 10. Get the text from the Red Box and place it in answer slot #10
+        timPage.inputTextIntoId(timPage.getTextFromRedBox(), "answer10");
     }
 
     @Test(dependsOnMethods = "step10")
     public void step11() {
         // 11. Which box is on top? orange or green -- place correct color in answer slot #11
+        timPage.inputTextIntoId(timPage.getColorOfHigherBox(), "answer11");
     }
 
     @Test(dependsOnMethods = "step11")
     public void step12() {
         // 12. Set browser width to 850 and height to 650
+        timPage.setBrowserSize(850, 650);
+        assertEquals(timPage.getBrowsersInfo("width"), 850 + "", "Width isn't correct");
+        assertEquals(timPage.getBrowsersInfo("height"), 650 + "", "Height isn't correct");
     }
 
     @Test(dependsOnMethods = "step12")
     public void step13() {
         // 13. Type into answer slot 13 yes or no depending on whether item by id of ishere is on the page
+        Boolean isDisplayed = timPage.isDisplayedById("ishere");
+        timPage.inputTextIntoId(isDisplayed ? "yes" : "no", "answer13");
     }
 
     @Test(dependsOnMethods = "step13")
     public void step14() {
         // 14. Type into answer slot 14 yes or no depending on whether item with id of purplebox is visible
+        Boolean isDisplayed = timPage.isDisplayedById("purplebox");
+        timPage.inputTextIntoId(isDisplayed ? "yes" : "no", "answer14");
     }
 
     @Test(dependsOnMethods = "step14")
@@ -108,16 +116,23 @@ public class TimVRoomTest extends BaseTest {
         // 15. Waiting game: click the link with link text of 'click then wait' a random wait will occur
         // (up to 10 seconds) and then a new link will get added with link text of 'click after wait' -
         // click this new link within 500 ms of it appearing to pass this test
+        timPage.click("click then wait");
+        timPage.waitUntilLinkTextWillAppear("click after wait");
+        timPage.click("click after wait");
+        System.out.println(timPage.getTextFromAlert());
     }
 
     @Test(dependsOnMethods = "step15")
     public void step16() {
         // 16. Click OK on the confirm after completing task 15
+        timPage.acceptAlert();
     }
 
     @Test(dependsOnMethods = "step16")
     public void step17() {
         // 17. Click the submit button on the form
+        timPage.submit();
+        timPage.checkResults();
+        assertTrue(timPage.resultsOK(),"Results aren't ok!");
     }
-
 }

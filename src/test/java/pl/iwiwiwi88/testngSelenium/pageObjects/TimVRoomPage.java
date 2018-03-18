@@ -16,7 +16,13 @@ public class TimVRoomPage extends BasePage {
     By occupation = By.id("occupation");
     By blueBox = By.cssSelector(".bluebox");
     By redBox = By.id("redbox");
-    By clickMeLink = By.xpath("//a[text()='click me']");
+    By writtenBook = By.xpath("//input[@value='wrotebook']");
+    By noWrittenBook = By.xpath("//input[@value='didntwritebook']");
+    By greenBox = By.id("greenbox");
+    By orangeBox = By.id("orangebox");
+    By checkResults = By.id("checkresults");
+    By pass = By.cssSelector(".pass");
+    By fail = By.cssSelector(".fail");
 
     public TimVRoomPage(WebDriver driver) {
         super(driver);
@@ -51,11 +57,37 @@ public class TimVRoomPage extends BasePage {
         return find(redBox).getAttribute("class");
     }
 
-    public void click(String linkText) {
-        if (linkText.equals("click me")) {
-            click(clickMeLink);
+
+    public void writtenBook(boolean wasBookWritten) {
+        if (wasBookWritten) {
+            click(writtenBook);
+        } else {
+            click(noWrittenBook);
         }
     }
 
+    public String getTextFromRedBox() {
+        return getText(redBox);
+    }
 
+    public String getColorOfHigherBox() {
+        WebElement greenB = find(greenBox);
+        WebElement oragngeB = find(orangeBox);
+        if (greenB.getLocation().getY()>oragngeB.getLocation().getY()) {
+            return "orange";
+        } else {
+            return "green";
+        }
+    }
+
+    public void checkResults() {
+        click(checkResults);
+    }
+
+    public boolean resultsOK() {
+        int passCount = findList(pass).size();
+        int failCount = findList(fail).size();
+        System.out.println("Passed: "+passCount+" Failed: "+failCount);
+        return failCount == 0;
+    }
 }
