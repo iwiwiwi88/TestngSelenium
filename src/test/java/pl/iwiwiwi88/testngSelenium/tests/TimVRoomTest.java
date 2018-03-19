@@ -119,7 +119,9 @@ public class TimVRoomTest extends BaseTest {
         timPage.click("click then wait");
         timPage.waitUntilLinkTextWillAppear("click after wait");
         timPage.click("click after wait");
-        System.out.println(timPage.getTextFromAlert());
+        String alertText = timPage.getTextFromAlert();
+        int timeInMs = Integer.parseInt(alertText.substring(20, alertText.length() - 2));
+        assertTrue(timeInMs < 500, "Time passed: " + timeInMs);
     }
 
     @Test(dependsOnMethods = "step15")
@@ -133,6 +135,6 @@ public class TimVRoomTest extends BaseTest {
         // 17. Click the submit button on the form
         timPage.submit();
         timPage.checkResults();
-        assertTrue(timPage.resultsOK(),"Results aren't ok!");
+        assertTrue(timPage.resultsOK(), "Results aren't ok!");
     }
 }
