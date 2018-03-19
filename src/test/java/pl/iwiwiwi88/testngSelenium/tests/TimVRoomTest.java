@@ -1,6 +1,5 @@
 package pl.iwiwiwi88.testngSelenium.tests;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.Test;
 import pl.iwiwiwi88.testngSelenium.pageObjects.TimVRoomPage;
 

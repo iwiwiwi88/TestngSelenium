@@ -1,11 +1,17 @@
 package pl.iwiwiwi88.testngSelenium.pageObjects;
 
+import com.google.common.base.Function;
 import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.Set;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class BasePage {
     WebDriver driver;
@@ -121,11 +127,53 @@ public class BasePage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(linkTextToAppear)));
     }
 
+    public void waitUntilPageIsLoaded() {
+        wait.until(new Function<WebDriver, Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                System.out.println("Current Window State       : "
+                        + String.valueOf(((JavascriptExecutor) driver).executeScript("return document.readyState")));
+                return String
+                        .valueOf(((JavascriptExecutor) driver).executeScript("return document.readyState"))
+                        .equals("complete");
+            }
+        });
+        System.out.println(driver.getCurrentUrl());
+    }
+
     public String getTextFromAlert() {
         return driver.switchTo().alert().getText();
     }
 
     public void acceptAlert() {
         driver.switchTo().alert().accept();
+    }
+
+    public void assertNewTabOpenedWithURL(String newTabURL, int expectedTabCount) {
+        if (driver instanceof FirefoxDriver) {
+            waitForDebug(5);
+        }
+        Set<String> tabs = driver.getWindowHandles();
+        assertEquals(tabs.size(), expectedTabCount, "No two tabs opened");
+        assertTrue(checkIfUrlIsLoaded(newTabURL, tabs), "Tab with url: " + newTabURL + " isn't opened.");
+    }
+
+    private boolean checkIfUrlIsLoaded(String newTabURL, Set<String> tabs) {
+        boolean isUrlPresent = false;
+        for (String handle : tabs) {
+            if (driver.switchTo().window(handle).getCurrentUrl().equals(newTabURL)) {
+                isUrlPresent = true;
+                break;
+            }
+        }
+        return isUrlPresent;
+    }
+
+    private void waitForDebug(int seconds) {
+        System.out.println("Waiting for " + seconds + " seconds...");
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

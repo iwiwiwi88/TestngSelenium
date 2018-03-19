@@ -1,0 +1,18 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Timvroom Suite" verbose="3">
+    <test name="Test timvroom in Chrome">
+        <parameter name="browser" value="Chrome"/>
+        <classes>
+            <class name="pl.iwiwiwi88.testngSelenium.tests.TimVRoomTest"/>
+        </classes>
+
+    </test>
+    <test name="Test timvroom in Firefox">
+        <parameter name="browser" value="Firefox"/>
+        <classes>
+            <class name="pl.iwiwiwi88.testngSelenium.tests.TimVRoomTest"/>
+        </classes>
+    </test>
+</suite>
+       
